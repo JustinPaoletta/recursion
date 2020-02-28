@@ -9,24 +9,25 @@
 
 const getElementsByClassName = function(className) {
 	
-    let elementsWithClass = [];
-    let findClass = function(element) {
-        //if the element has a classlist and that classlist contains the argument className
+    let elementsWithClass = []; // array of all divs that have the className
+
+    let findClass = function(element) { 
+        // if the element has a classlist and that classlist contains the argument className
         if (element.classList && element.classList.contains(className)) {
-            //push the element meeting the above condition to the array 
+            // push the element meeting the above condition to the array 
             elementsWithClass.push(element);
         }
-        //if the element has childNodes
+        // if the element has childNodes
         if (element.hasChildNodes()) {
-            //loop through the childNodes of said element
-            for (let i = 0; i < element.childNodes.length; i++) {
-                //checking each to see if it has the className
-                findClass(element.childNodes[i]);
-            }
+            // call findClass on each one of the child nodes
+            element.childNodes.forEach((node) => {
+                findClass(node)
+            });
         }
     }
 
     findClass(document.body);
+
     return elementsWithClass;
 };
 
